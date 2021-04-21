@@ -1,4 +1,5 @@
 import sys
+# definimos una lista para nosotros y para aplicar un ejemplo, está sujeta a cambios.
 clients = ['Pablo', 'Ricardo']
 
 def create_client(client_name):
