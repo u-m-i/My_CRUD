@@ -1,6 +1,19 @@
 import sys
 # definimos una lista para nosotros y para aplicar un ejemplo, está sujeta a cambios.
-clients = ['Pablo', 'Ricardo']
+clients = [
+        {
+            'name':'Pablo',
+            'company': 'Google',
+            'email': 'pablo@gmail.com',
+            'position':'Software enginner'
+        },
+        {
+            'name':'Ricardo',
+            'company':'Facebook',
+            'email':'ricardo@facebook.com',
+            'position':'Product Manager'
+        }
+    ]
 
 def create_client(client_name):
     global clients # se utiliza el built-in para poder acceder a una variable global.
