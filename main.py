@@ -15,10 +15,10 @@ clients = [
         }
     ]
 
-def create_client(client_name):
+def create_client(client):
     global clients # se utiliza el built-in para poder acceder a una variable global.
-    if client_name not in clients:
-        client.append(client_name)
+    if client not in clients:
+        clients.append(client)
     else:
         not_found(client_name)
 
@@ -39,6 +39,14 @@ def search_client(client_name):
         else:
             return True
 
+def _get_client_field(field_name): #Se agregó una nueva función.
+    """Ask for each field on the client dictionary
+    """
+    field = None
+    while not field:
+        field = input(f'What is the client {field_name}? :').strip()
+    return field
+
 
 def _get_client_name():
     client_name = None
@@ -56,10 +64,11 @@ def not_found(client_name):
     return f"{client_name} don't have been found"
 
 
-def list_clients():
+def list_clients():#Se cambió la forma de listar
     global clients
     for idx, client in enumerate(clients):
-        print(f'{idx}: {client}')
+        print(f"{idx} | {client['name']} | {client['company']} | {client['email']} | {client['position']} ")
+        print(60*'-')
 
 
 def update_client(client_name, updated_client_name):
@@ -90,13 +99,19 @@ if __name__ == '__main__':
     _print_welcom()
     command = input().upper()
     if command == 'C':
-        client_name = _get_client_name()
-        create_client(client_name)
+        client = {
+                'name': _get_client_field('name'),
+                'company': _get_client_field('company'),
+                'email': _get_client_field('email'),
+                'position':_get_client_field('position')
+                
+        }
+        create_client(client)
         list_clients()
     elif command == 'L':
         list_clients()
         sys.exit
-    elif command == 'D':
+    elif command == 'D':    
         client_name = _get_client_name()
         delete_client(client_name)
         list_clients()
