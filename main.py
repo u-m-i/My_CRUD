@@ -76,11 +76,11 @@ def not_found(client_name):
 
 def list_clients():#Se cambió la forma de listar
     global clients
-    print('uid|name|company|email|position|')
+    print('uid | Name | Company | Email | Position |')
     print('*'*50)
     for idx, client in enumerate(clients):
         print(f"{idx} | {client['name']} | {client['company']} | {client['email']} | {client['position']} ")
-        print("- "*70)
+        print("- "*45)
 
 
 def update_client(client_id, updated_client):
@@ -126,19 +126,16 @@ if __name__ == '__main__':
                 'position':_get_client_field('position')
         }
         create_client(client)
-        list_clients()
     elif command == 'L':
         list_clients()
         sys.exit
     elif command == 'D': 
         client_id = int(_get_client_field('id'))
         delete_client(client_id)   
-        list_clients()
     elif command == 'U':
         client_id = int(_get_client_field('id'))
         updated_client = _get_client_from_user()
         update_client(client_id, updated_client)
-        list_clients()
     elif command == 'S':
         client_name = _get_client_field('name')
         found = search_client(client_name)
