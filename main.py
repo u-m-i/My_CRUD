@@ -36,7 +36,7 @@ def delete_client(client_id):
 def search_client(client_name):
     global clients
     for client in clients:
-        if client != client_name:
+        if client['name'] != client_name:
             continue
         else:
             return True
@@ -131,7 +131,7 @@ if __name__ == '__main__':
         update_client(client_id, updated_client)
         list_clients()
     elif command == 'S':
-        client_name = _get_client_name()
+        client_name = _get_client_field('name')
         found = search_client(client_name)
         if found: 
             print('The client is alredy')
