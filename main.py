@@ -1,19 +1,25 @@
 import sys
+import csv
+import os
 # definimos una lista para nosotros y para aplicar un ejemplo, está sujeta a cambios.
-clients = [
-        {
-            'name':'Pablo',
-            'company': 'Google',
-            'email': 'pablo@gmail.com',
-            'position':'Software enginner'
-        },
-        {
-            'name':'Ricardo',
-            'company':'Facebook',
-            'email':'ricardo@facebook.com',
-            'position':'Product Manager'
-        }
-    ]
+CLIENT_TABLE = ".clients.csv"
+CLIENT_SCHEMA = ['name','company','email', 'position']
+clients = []
+def _initialize_clients_from_storage():
+    with open(CLIENT_TABLE, mode=r) as f:
+        reader = csv.DictReader(f, fieldname=CLIENT_SCHEMA)
+        for row in reader:
+            clients.append(row)
+
+
+def _save_clients_to_storage():
+    tmp_table_name = f'{CLIENT_TABLE}.tmp'
+    with open(tmp_table_name, mode=w) as f:
+        writer = csv.DictWriter(f, field=CLIENT_SCHEMA)
+        writer.writerows(clients)
+        os.remove(CLIENT_TABLE)
+        os.rename(tmp_table_name, CLIENT_TABLE)
+
 
 def create_client(client):
     global clients # se utiliza el built-in para poder acceder a una variable global.
@@ -63,7 +69,9 @@ def _get_client_name():
 
 
 def not_found(client_name):
-    return f"{client_name} don't have been found"
+    if client_name is int:
+        return f"The client with the id {client_name} don't have been found" 
+    return f'Not have been found {client_name} parcero'
 
 
 def list_clients():#Se cambió la forma de listar
@@ -82,7 +90,7 @@ def update_client(client_id, updated_client):
     if len(clients)-1 >= client_id:
         clients[client_id] = updated_client
     else:
-        print('Not found bro')
+        print(not_found(client_id))
 
 
 def _get_client_from_user():
@@ -107,6 +115,7 @@ def _print_welcom():
 
 
 if __name__ == '__main__':
+    _initialize_clients_from_storage()
     _print_welcom()
     command = input().upper()
     if command == 'C':
@@ -136,6 +145,7 @@ if __name__ == '__main__':
         if found: 
             print('The client is alredy')
         else:
-            print(f'Not have been found {client_name} parcero')
+            print(not_found(client_name))
     else:
         print('InvalidCommand')
+    _save_clients_to_storage()
