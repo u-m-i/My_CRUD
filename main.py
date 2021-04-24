@@ -23,12 +23,14 @@ def create_client(client):
         not_found(client_name)
 
 
-def delete_client(client_name):
+def delete_client(client_id):
     global clients
-    if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
-    else:
-        print(not_found(client_name))
+    for idc,client in enumerate(clients):
+        if idc == client_id:
+            del clients[idc]
+            break
+        else:
+            continue
 
 
 def search_client(client_name):
@@ -66,22 +68,31 @@ def not_found(client_name):
 
 def list_clients():#Se cambió la forma de listar
     global clients
+    print('uid|name|company|email|position|')
+    print('*'*50)
     for idx, client in enumerate(clients):
         print(f"{idx} | {client['name']} | {client['company']} | {client['email']} | {client['position']} ")
-        print(60*'-')
+        print("- "*70)
 
 
-def update_client(client_name, updated_client_name):
+def update_client(client_id, updated_client):
+    """We compare the given id with the clients dict lenght, if is major o equal, then is updated the client with the first id
+    """
     global clients
-    if client_name.capitalize() in clients:
-        index = clients.index
+    if len(clients)-1 >= client_id:
+        clients[client_id] = updated_client
     else:
-        print(not_found(client_name))
+        print('Not found bro')
 
 
-def _add_comma():
-    global clients
-    clients += ','
+def _get_client_from_user():
+    client = {
+            'name': _get_client_field('name'),
+            'company': _get_client_field('company'),
+            'email': _get_client_field('email'),
+            'position':_get_client_field('position')            
+    }
+    return client
 
 
 def _print_welcom():
@@ -104,21 +115,20 @@ if __name__ == '__main__':
                 'company': _get_client_field('company'),
                 'email': _get_client_field('email'),
                 'position':_get_client_field('position')
-                
         }
         create_client(client)
         list_clients()
     elif command == 'L':
         list_clients()
         sys.exit
-    elif command == 'D':    
-        client_name = _get_client_name()
-        delete_client(client_name)
+    elif command == 'D': 
+        client_id = int(_get_client_field('id'))
+        delete_client(client_id)   
         list_clients()
     elif command == 'U':
-        client_name = _get_client_name()
-        updated_client_name = input('What is the updated client name?')
-        update_client(client_name, updated_client_name)
+        client_id = int(_get_client_field('id'))
+        updated_client = _get_client_from_user()
+        update_client(client_id, updated_client)
         list_clients()
     elif command == 'S':
         client_name = _get_client_name()
