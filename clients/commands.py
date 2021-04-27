@@ -8,15 +8,15 @@ def clients():
 
 
 @clients.command() #Pasamos el comando cliente, para agregarlo a su  grupo de comandos,jutno con el contexto
-@click.pass_context()
+@click.pass_context
 def create(ctx, name, company, email, position):
     """Creates a new client 
     """
-    pass#Siempre dejamos dos espacios entre funciones
+    pass #Siempre dejamos dos espacios entre funciones
 
 
 @clients.command()
-@click.pass_context()
+@click.pass_context
 def list(ctx):
     """List all clients
     """
@@ -24,7 +24,7 @@ def list(ctx):
 
 
 @clients.command()
-@click.pass_context()
+@click.pass_context
 def updated(ctx, client_cid):
     """Updates a client
     """
@@ -32,7 +32,7 @@ def updated(ctx, client_cid):
 
 
 @clients.command()
-@click.pass_context()
+@click.pass_context
 def delete(ctx, client_cid):
     """Deletes a client
     """
