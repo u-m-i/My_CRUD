@@ -37,3 +37,6 @@ def delete(ctx, client_cid):
     """Deletes a client
     """
     pass
+
+#Declaramos un alias para llamar todas las funciones inmediatamente
+all = clients   
