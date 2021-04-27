@@ -8,7 +8,7 @@ setup(
         'Click',
     ], 
     #Nuestra apliación inicia con el método cli.
-    entry_points= ''' 
+    entry_points= '''  
         [console_scripts]
         pv = pv:cli 
     ''',
