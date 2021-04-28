@@ -24,7 +24,7 @@ class ClientService:
         updated_clients = []
         for client in clients:
             if client['uid'] == updated_client.uid:
-                updated_clients.append(updated_client.to_dict)
+                updated_clients.append(updated_client.to_dict())
             else:
                 updated_clients.append(client)
         self._save_to_disk(updated_clients)
@@ -35,5 +35,5 @@ class ClientService:
             writer = csv.DictWriter(f, fieldnames=Client.schema())
             writer.writerows(clients)
 
-        os.remove(self,table_name)
+        os.remove(self.table_name)
         os.rename(tmp_table_name, self.table_name)
