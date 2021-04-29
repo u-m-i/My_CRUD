@@ -1,5 +1,4 @@
 import click
-
 from clients.services import ClientService
 from clients.models import Client
 
@@ -31,8 +30,8 @@ def clients():
 def create(ctx, name, company, email, position):
     """Creates a new client 
     """
-    client = Client(name, company, email, position)
     client_service = ClientService(ctx.obj['clients_table'])
+    client = Client(name, company, email, position).to_dict()
     client_service.create_client(client)
     #Siempre dejamos dos espacios entre funciones
 
@@ -43,12 +42,12 @@ def list(ctx):
     """List all clients
     """
     clients_service = ClientService(ctx.obj['clients_table'])
-    click.echo('ID | NAME | COMPANY | EMAIL | POSITION ')
-    click.echo('- '*38)
     clients_list = clients_service.list_client()
 
+    click.echo('                  ID                 |   NAME   |   COMPANY     |      EMAIL      |   POSITION   ')
+    click.echo('- '*38)
     for client in clients_list:
-        click.echo(f"{client['uid']} | {client['name']} | {client['company']} | {client['email']} | {client['position']}\n")
+        click.echo(f"{client['uid']} |  {client['name']}  |  {client['company']}  | {client['email']} | {client['position']}\n")
 
 
 @clients.command()
@@ -59,8 +58,7 @@ def update(ctx, client_uid):
     """Updates a client
     """
     client_service = ClientService(ctx.obj['clients_table'])
-    client_list = client_service.list_client()
-    client = [client for client in client_list if client['uid'] == client_uid] 
+    client = [client for client in client_service.list_client() if client['uid'] == client_uid] 
 
     if client:
         client = _update_client_flow(Client(**client[0]))
@@ -87,14 +85,12 @@ def delete(ctx, client_uid):
     """Deletes a client
     """
     client_service = ClientService(ctx.obj['clients_table'])
-    client_list = client_service.list_client()
-    client = [client for client in client_list if client['uid'] == client_uid] 
-
-    if client:
+    client = [client for client in client_service.list_client() if client['uid'] == client_uid] 
+    if click.confirm("Are ya sure about delete the the client with the id: {client[0]}"):
         client_service.delete_client(client_uid)
         click.echo('\nClient sucessfully ereased')
     else:
-        click.echo('Client not found')
+        click.echo('OK')
     
 #Declaramos un alias para llamar todas las funciones inmediatamente
 all = clients   
