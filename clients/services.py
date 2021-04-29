@@ -1,6 +1,7 @@
 import csv
 #Importamos a nuestra clase cliente, para tener el esquema de la estructura tabular
 from clients.models import Client
+from common.services import PV
 import os 
 
 class ClientService:
@@ -18,6 +19,7 @@ class ClientService:
         with open(self.table_name, mode='r') as f:
             reader = csv.DictReader(f, fieldnames=Client.schema())
             return list(reader)
+
     
     def update_client(self, updated_client):
         clients = self.list_client()
@@ -28,6 +30,10 @@ class ClientService:
             else:
                 updated_clients.append(client)
         self._save_to_disk(updated_clients)
+
+
+    def delete_client(self, client_uid):
+        self.delete(client_uid, Client.schema())
     
     def _save_to_disk(self,clients):
         tmp_table_name = self.table_name + '.tmp'

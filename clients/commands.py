@@ -69,6 +69,7 @@ def update(ctx, client_uid):
     else:
         click.echo('Client not found')
 
+
 def _update_client_flow(client):
     click.echo("Leave empty if you don't want to modify the value")
     client.name = click.prompt('New name', type=str, default=client.name)
@@ -78,14 +79,23 @@ def _update_client_flow(client):
     return client
 
 
-
-
 @clients.command()
+@click.argument('client_uid',
+                type=str)
 @click.pass_context
 def delete(ctx, client_uid):
     """Deletes a client
     """
-    pass
+    client_service = ClientService(ctx.obj['clients_table'])
+    client_list = client_service.list_client()
+    client = [client for client in client_list if client['uid'] == client_uid] 
 
+    if client:
+        client_service.delete_client(client_uid)
+        click.echo('\nClient sucessfully ereased')
+    else:
+        click.echo('Client not found')
+    
 #Declaramos un alias para llamar todas las funciones inmediatamente
 all = clients   
+
