@@ -1,1 +1,1 @@
-A la hora de resolver conflictos, tenemos que poner lo que necesitemos de los dos mundos.
+A la hora de resolver conflictos,solo tenemos que poner lo mejor de nosotros como programadores y lo que necesitemos de los dos mundos.de esa forma logramos lo que queremos
