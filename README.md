@@ -1,3 +1,2 @@
-# My_CRUD
-My first CRUD with Python, and command line app
->>>>>>> ed87ce6779e7ea15901193820203f36918be84a2
+# My_CRUD - complete_crud 
+This is the branch, which have all the changes to work properly.
