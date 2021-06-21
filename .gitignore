@@ -1,4 +1,7 @@
 venv/
+.venv/
+.vscode/
+Selenium/
 *__pycache__/
 pv.egg-info/
 pv.egg-info/
